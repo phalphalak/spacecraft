@@ -1,0 +1,3 @@
+module SpaceCraft::Model
+
+end
