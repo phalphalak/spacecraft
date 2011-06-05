@@ -1,0 +1,3 @@
+module SpaceCraft::Controller
+
+end

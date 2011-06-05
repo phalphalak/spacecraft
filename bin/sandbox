@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(
+    File.join(File.dirname(__FILE__), %w[.. lib space_craft]))
+
+require 'java'
+
+java_import javax.swing.JFrame
+
+
+grid = SpaceCraft::Model::Grid.new(20,10)
+
+panel = SpaceCraft::View::Planet.new
+
+painter = SpaceCraft::Model::Painter.new
+painter.view = panel
+painter.planet = grid
+
+tick = SpaceCraft::Controller::Tick.new
+tick.painter = painter
+
+tickThread = java.lang.Thread.new(tick)
+tickThread.start
+
+panel_controller = SpaceCraft::Controller::Planet.new
+
+panel.controller = panel_controller
+panel_controller.view = panel
+
+frame = JFrame.new('spacecraft sandbox')
+frame.content_pane = panel
+frame.set_size(600,400)
+frame.default_close_operation = JFrame::EXIT_ON_CLOSE
+frame.visible = true

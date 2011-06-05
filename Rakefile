@@ -1,8 +1,13 @@
 
 require 'rspec/core/rake_task'
 
+require 'space_craft'
+
 RSpec::Core::RakeTask.new(:spec)
 
+task 'sandbox' do
+  puts 123
+end
 
 
 task :default => :spec

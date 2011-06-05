@@ -1,0 +1,3 @@
+module SpaceCraft::View
+
+end
