@@ -8,13 +8,31 @@ require 'java'
 java_import javax.swing.JFrame
 
 
-grid = SpaceCraft::Model::Grid.new(20,10)
+planet = SpaceCraft::Model::Planet.new
+planet.block_types << :solid
+grid = SpaceCraft::Model::Grid.new(50,30)
+7.times do |i|
+  (7 - i*2).times do |j|
+    grid[3+i+j, 9-i] = :solid
+  end
+end
+5.times do |x|
+  3.times do |y|
+    grid[x+13,y+7] = :solid
+  end
+end
+20.times do |i|
+  grid.width.times do |x|
+    grid[x,i+10] = :solid
+  end
+end
+planet.grid = grid
 
 panel = SpaceCraft::View::Planet.new
 
 painter = SpaceCraft::Model::Painter.new
 painter.view = panel
-painter.planet = grid
+painter.planet = planet
 
 tick = SpaceCraft::Controller::Tick.new
 tick.painter = painter

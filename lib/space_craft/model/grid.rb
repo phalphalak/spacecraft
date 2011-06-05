@@ -25,7 +25,7 @@ class SpaceCraft::Model::Grid
   end
 
   def validate_include(x,y)
-    raise "x or y out of range (x=#{x}m y=#{y} )" unless self.include?(x,y)
+    raise "x or y out of range (x=#{x}, y=#{y} )" unless self.include?(x,y)
   end
 
   def include?(x,y)

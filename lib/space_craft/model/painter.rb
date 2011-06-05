@@ -35,18 +35,26 @@ module SpaceCraft::Model
       image = BufferedImage.new(width, height, BufferedImage::TYPE_INT_RGB)
       g = image.create_graphics
 
-      g.color = Color::BLACK
+      g.color = Color::GRAY
       g.fill_rect(0, 0, width, height)
 
-      grid = planet
+      grid = planet.grid
+      grid_size = 10
+
+      g.color = Color::BLACK
+      g.fill_rect(0, 0, grid.width * grid_size, grid.height * grid_size)
+
       grid.width.times do |x|
         grid.height.times do |y|
-          
+          g.color = Color.new 0,64,0
+          g.fill_rect x*grid_size, y*grid_size, grid_size, grid_size unless grid[x,y].nil?
+          g.color = Color::GREEN
+          g.draw_rect x*grid_size, y*grid_size, grid_size, grid_size unless grid[x,y].nil?
         end
       end
 
       g.color = Color::WHITE
-      g.draw_string("#{fps.to_i.to_s} fps", 10, 30)
+      g.draw_string("#{fps.to_i.to_s} fps", 10, 20)
       view.schedule_image(image)
     end
   end
