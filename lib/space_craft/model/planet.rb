@@ -2,10 +2,10 @@
 module SpaceCraft::Model
 
   class Planet
-    attr_accessor :grid, :block_types
+    attr_accessor :grid, :dynamic_blocks
     
     def initialize
-      @block_types = []
+      @dynamic_blocks = []
     end
 
   

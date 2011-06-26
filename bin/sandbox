@@ -7,25 +7,57 @@ require 'java'
 
 java_import javax.swing.JFrame
 
+puts java.lang.Runtime.getRuntime.max_memory
+
+def solid
+  s = SpaceCraft::Model::Block.new
+  s.kind = :solid
+  s
+end
+
+def air
+  a = SpaceCraft::Model::Block.new
+  a.kind = :air
+  a
+end
+
+def water
+  w = SpaceCraft::Model::Block.new
+  w.kind = :water
+  w.mass = 1.0
+  w
+end
 
 planet = SpaceCraft::Model::Planet.new
-planet.block_types << :solid
+
 grid = SpaceCraft::Model::Grid.new(50,30)
+
+grid[8,2] = water
+grid[8,2].mass = 8
+#grid[8,0] = water
+#grid[7,2] = water
+#grid[6,2] = water
+#grid[6,0] = water
+#grid[7,0] = water
+#grid[13,2] = water
 7.times do |i|
   (7 - i*2).times do |j|
-    grid[3+i+j, 9-i] = :solid
+    grid[3+i+j, 9-i] = solid
   end
 end
 5.times do |x|
   3.times do |y|
-    grid[x+13,y+7] = :solid
+    grid[x+13,y+7] = solid
   end
 end
 20.times do |i|
   grid.width.times do |x|
-    grid[x,i+10] = :solid
+    grid[x,i+10] = solid
   end
 end
+
+grid.fill_empty { air }
+
 planet.grid = grid
 
 panel = SpaceCraft::View::Planet.new
@@ -36,6 +68,7 @@ painter.planet = planet
 
 tick = SpaceCraft::Controller::Tick.new
 tick.painter = painter
+tick.planet = planet
 
 tickThread = java.lang.Thread.new(tick)
 tickThread.start

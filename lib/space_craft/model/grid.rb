@@ -31,5 +31,13 @@ class SpaceCraft::Model::Grid
   def include?(x,y)
     (0..width-1).include?(x) && (0..height-1).include?(y)
   end
+
+  def fill_empty
+    width.times do |x|
+      height.times do |y|
+        self[x,y] = yield if self[x,y].nil?
+      end
+    end
+  end
   
 end

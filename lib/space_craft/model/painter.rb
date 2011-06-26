@@ -27,6 +27,10 @@ module SpaceCraft::Model
       @current_fps
     end
 
+    def grid_size
+      16
+    end
+
     def paint
       width = view.width
       height = view.height
@@ -39,17 +43,13 @@ module SpaceCraft::Model
       g.fill_rect(0, 0, width, height)
 
       grid = planet.grid
-      grid_size = 10
 
       g.color = Color::BLACK
       g.fill_rect(0, 0, grid.width * grid_size, grid.height * grid_size)
 
       grid.width.times do |x|
         grid.height.times do |y|
-          g.color = Color.new 0,64,0
-          g.fill_rect x*grid_size, y*grid_size, grid_size, grid_size unless grid[x,y].nil?
-          g.color = Color::GREEN
-          g.draw_rect x*grid_size, y*grid_size, grid_size, grid_size unless grid[x,y].nil?
+          paint_block(g,x,y)
         end
       end
 
@@ -57,5 +57,27 @@ module SpaceCraft::Model
       g.draw_string("#{fps.to_i.to_s} fps", 10, 20)
       view.schedule_image(image)
     end
+
+    def paint_block(g, x, y)
+      block = planet.grid[x,y]
+      if block
+        x_offset = x * grid_size
+        y_offset = y * grid_size
+
+        if block.kind == :water
+          g.color = Color::BLUE
+          height = [block.mass, 1.0].min * grid_size
+          g.fill_rect x_offset, y_offset+(grid_size-height), grid_size, height
+          g.color = Color.new 128,128,255
+          g.draw_rect x_offset, y_offset+(grid_size-height), grid_size, height
+        elsif block.kind == :solid
+          g.color = Color.new 0,64,0
+          g.fill_rect x_offset, y_offset, grid_size, grid_size
+          g.color = Color::GREEN
+          g.draw_rect x_offset, y_offset, grid_size, grid_size
+        end
+      end
+    end
+
   end
 end
