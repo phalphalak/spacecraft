@@ -66,8 +66,6 @@ p planet.grid[5,6]
       left_flow = desired_side_flow(current, left, remaining_mass, turn)
       right_flow = desired_side_flow(current, right, remaining_mass, turn)
       sum = left_flow + right_flow
-      puts "remaining_mass: #{remaining_mass}"
-      puts "sum: #{sum}"
       if sum > remaining_mass
         left_flow  = left_flow  / sum * remaining_mass
         right_flow = right_flow / sum * remaining_mass
@@ -117,7 +115,7 @@ p planet.grid[5,6]
           block = planet.grid[x,y]
           next if block.nil?
           if block.kind == :water
-puts "(#{x}, #{y})"
+#puts "(#{x}, #{y})"
             update_turn(block, turn)
             remaining_mass = block.mass
 

@@ -71,7 +71,7 @@ module SpaceCraft::Model
    
       b = 255
       #rg = remap(value, min, max, 200, 50)  
-      rg = remap(value, min, max, 40, 100)  
+      rg = remap(value, min, max, 100, 40)  
 =begin 
       rg = 50
       b = nil
@@ -103,10 +103,10 @@ module SpaceCraft::Model
 #            g.fill_rect x_offset, y_offset, grid_size, grid_size
 #          end
 
-          g.color = water_color(block.mass)
+          g.color = Color::BLUE #water_color(block.mass)
           g.fill_rect x_offset, y_offset+(grid_size-height), grid_size, height
-          #g.color = Color.new 128,128,255
-          #g.draw_rect x_offset, y_offset+(grid_size-height), grid_size, height
+          g.color = Color.new 128,128,255
+          g.draw_rect x_offset, y_offset+(grid_size-height), grid_size, height
         elsif block.kind == :solid
           g.color = Color.new 0,64,0
           g.fill_rect x_offset, y_offset, grid_size, grid_size
